@@ -11,6 +11,9 @@ public class AtkCollier : MonoBehaviour
               playerType = transform.parent.GetComponent<Player>().Type;
 
               Debug.Log(other.gameObject.name);
+              Debug.Log(other.gameObject.tag);
+              Debug.Log(playerType);
+
               switch (playerType)
               {
                      case PlayerType.Repairer:
@@ -21,7 +24,7 @@ public class AtkCollier : MonoBehaviour
                             }
                             break;
                      case PlayerType.Saboteur:
-                            if(other.gameObject.tag=="Player")
+                            //if(other.gameObject.tag=="Player")
                             other.transform.GetComponent<Player>().SetDaze();
            
                             break;
