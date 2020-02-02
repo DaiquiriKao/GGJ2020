@@ -16,6 +16,7 @@ public class AtkCollier : MonoBehaviour
                      case PlayerType.Repairer:
                             if (other.gameObject.tag == "Object") { 
                                    Debug.Log("Repair : " + other.gameObject.name);
+
                             other.gameObject.transform.GetComponent<Hat>().LoadPlus();
                             }
                             break;

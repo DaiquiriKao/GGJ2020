@@ -76,6 +76,8 @@ public class Player : FakePlayer
               {
                      Debug.Log(collision.gameObject.name);
                      Item item = collision.transform.GetComponent<Item>();
+                     item.ItemManager.Generate(item.ToolType); 
+                     item.ItemManager.Items.Remove(item.gameObject);
                      this.item = item;
                      UseItool(item);
               }
