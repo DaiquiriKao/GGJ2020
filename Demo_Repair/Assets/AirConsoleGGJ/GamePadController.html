@@ -1,0 +1,143 @@
+
+<html>
+<head>
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <script type="text/javascript" src="https://www.airconsole.com/api/airconsole-1.7.0.js"></script>
+  <style type=text/css>
+  /* the style sheet dictates what our elements (buttons, backgrounds etc.) will look like. */
+	#background
+	{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+
+	.button
+	{
+		background: #3B3B3B;
+		font-size: 14px;
+		padding: 5px 10px 5px 10px;
+		border: solid #1f1f1f 2px;
+		height: 100%;
+		position: absolute;
+	}
+
+	#forward-button
+	{
+		top: 0;
+		left: 0;
+		width: 45%;
+		height: 30%;
+	}
+
+	#back-button
+	{
+		bottom: 0;
+		left: 0;
+		width: 45%;
+		height: 30%;
+	}
+
+	#left-button
+	{
+		top: 35%;
+		left: 0;
+		width: 20%;
+		height: 25%;
+	}
+
+	#right-button
+	{
+		top: 35%;
+		left: 25%;
+		width: 20%;
+		height: 25%;
+	}
+
+	#dodge-button
+	{
+		right: 0;
+		top: 0;
+		width: 45%;
+		height: 48%;
+	}
+
+	#interact-button
+	{
+		right: 0;
+		bottom: 0;
+		width: 45%;
+		height: 48%;
+	}
+
+	.button-text
+	{
+		position: absolute;
+		color: white;
+		font-family: sans-serif;
+		text-align: center;
+		pointer-events: none;
+		width: 50%;
+		height: 20%;
+		left: 25%;
+		top: 40%;
+	}
+  </style>
+  
+  <script type="text/javascript">
+
+    function App() {
+
+    /* JavaScript / Functionality. Add functions and evens here */ 
+
+		this.airconsole = new AirConsole({"orientation": "landscape","synchronize_time" : "true"});
+		
+		/*
+		me.airconsole.onMessage = function(from, data){
+			console.log("onMessage", from, data);
+		}
+		*/
+      
+      /*
+       * Here we are adding support for mouse events manually.
+       * --> WE STRONGLY ENCOURAGE YOU TO USE THE AIRCONSOLE CONTROLS LIBRARY
+       * WHICH IS EVEN BETTER (BUT WE DONT WANT TO BLOAT THE CODE HERE).
+       * https://github.com/AirConsole/airconsole-controls/
+       * 
+       * DO NOT USE ONCLICK HANDLERS.
+       * THEY ADD A 200MS DELAY!
+       */
+      if (!("ontouchstart" in document.createElement("div"))) {
+        var elements = document.getElementsByTagName("*");
+        for (var i = 0; i < elements.length; ++i) {
+          var element = elements[i];
+          var ontouchstart = element.getAttribute("ontouchstart");
+          if (ontouchstart) {
+            element.setAttribute("onmousedown", ontouchstart);
+          }
+          var ontouchend = element.getAttribute("ontouchend");
+          if (ontouchend) {
+            element.setAttribute("onmouseup", ontouchend);
+          }
+        }
+      }
+    }
+
+	App.prototype.sendMessageToScreen = function(msg)
+	{
+		this.airconsole.message(AirConsole.SCREEN, {"action": msg});
+	};
+
+  </script>
+</head>
+<body onload="window.app = new App()">
+  <!-- Add your HTML elements here -->
+		<div id="background"></div>
+		<div class="button" id="forward-button"ontouchstart="window.app.sendMessageToScreen('moveForward')" ontouchend="window.app.sendMessageToScreen('moveForwardStop')"></div>
+		<div class="button" id="back-button"ontouchstart="window.app.sendMessageToScreen('moveBack')" ontouchend="window.app.sendMessageToScreen('moveBackStop')"></div>
+		<div class="button" id="right-button"ontouchstart="window.app.sendMessageToScreen('turnRight')" ontouchend="window.app.sendMessageToScreen('turnRightStop')"></div>
+		<div class="button" id="left-button"ontouchstart="window.app.sendMessageToScreen('turnLeft')" ontouchend="window.app.sendMessageToScreen('turnLeftStop')"></div>
+		<div class="button" id="dodge-button" ontouchstart="window.app.sendMessageToScreen('dodge')"></div>
+		<div class="button" id="interact-button" ontouchstart="window.app.sendMessageToScreen('interact')"></div>
+</body>
+</html>
