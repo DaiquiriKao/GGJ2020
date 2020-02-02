@@ -10,9 +10,12 @@ public class Hat : MonoBehaviour
 
        public Slider Loading;
 
+    private void Start()
+    {
+        Loading.value = 0;
+    }
 
-
-       public void LoadPlus ()
+    public void LoadPlus ()
        {
               Pepairload_Value++;
 
