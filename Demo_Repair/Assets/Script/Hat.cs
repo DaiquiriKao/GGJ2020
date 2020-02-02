@@ -10,4 +10,13 @@ public class Hat : MonoBehaviour
 
        public Slider Loading;
 
+
+       void LoadPlus ()
+       {
+              Pepairload_Value++;
+
+              float index = (float)Pepairload_Value / (float)Pepairload_Max;
+
+       }
+
 }
