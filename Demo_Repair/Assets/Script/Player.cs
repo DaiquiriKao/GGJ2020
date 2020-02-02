@@ -1,49 +1,60 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : FakePlayer
 {
-       public KeyCode Up;
-       public KeyCode Down;
-       public KeyCode Left;
-       public KeyCode Right;
-       public KeyCode Atk;
-       public KeyCode Miss;
+    public KeyCode Up;
+    public KeyCode Down;
+    public KeyCode Left;
+    public KeyCode Right;
+    public KeyCode Atk;
+    public KeyCode Miss;
 
-       public int ID;
+    public int ID;
 
-       public int Speed;
-       public int RotateAngle;
+    public int Speed;
+    public int RotateAngle;
 
-       bool canAtk;
+    bool canAtk;
 
-       public PlayerState State;
-       public PlayerType Type;
+    public PlayerState State;
+    public PlayerType Type;
 
-       public Collider collider;
+    public Collider collider;
 
-       public Collider Atk_collider;
+    public Collider Atk_collider;
 
-       public Animator animator;
+    public Animator animator;
 
-       public Animator[] animators;
+    public Animator[] animators;
 
-       public Item item;
+    public Item item;
 
-       public Vector3 point;
+    public Vector3 point;
 
-       //public SpriteRenderer PlayerSprite;
-       //public Transform LookAtTarget;
+    //public SpriteRenderer PlayerSprite;
+    //public Transform LookAtTarget;
+
+    public Text scoreText;
+    public float score;
+    public AtkCollier atkZone;
+
+    public delegate void OnGetScore(int value);
 
 
-       private void Start()
-       {
-              canAtk = true;
-              item = null;
-              collider = transform.GetComponent<BoxCollider>();
-              animator = animators[0];
-       }
+    private void Start()
+    {
+        canAtk = true;
+        item = null;
+        collider = transform.GetComponent<BoxCollider>();
+        animator = animators[0];
+
+        score = 0;
+        scoreText.text = score.ToString();
+        atkZone.SetOnGetScore(OnGetScoreDelegate);
+    }
        private void Update()
        {
               if (State == PlayerState.Invincible|| State ==PlayerState.Dizzy) return;
@@ -71,16 +82,16 @@ public class Player : FakePlayer
 
        private void OnCollisionEnter(Collision collision)
        {
-              if (item != null) return;
-              if (collision.gameObject.tag == "Item")
-              {
-                     Debug.Log(collision.gameObject.name);
-                     Item item = collision.transform.GetComponent<Item>();
-                     item.ItemManager.Generate(item.ToolType); 
-                     item.ItemManager.Items.Remove(item.gameObject);
-                     this.item = item;
-                     UseItool(item);
-              }
+            if (item != null) return;
+            if (collision.gameObject.tag == "Item")
+            {
+                Debug.Log(collision.gameObject.name);
+                Item item = collision.transform.GetComponent<Item>();
+                item.ItemManager.Generate(item.ToolType); 
+                item.ItemManager.Items.Remove(item.gameObject);
+                this.item = item;
+                UseItool(item);
+            }
        }
        public void SetIdle()
        {
@@ -213,6 +224,11 @@ public class Player : FakePlayer
               animator.SetBool("Daze", false);
               State = PlayerState.Normal;
        }
-
+        
+    private void OnGetScoreDelegate(int value)
+    {
+        score+=value;
+        scoreText.text = score.ToString();
+    }
 
 }
