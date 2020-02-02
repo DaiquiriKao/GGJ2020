@@ -53,10 +53,10 @@ public class Player : FakePlayer
               if (Input.GetKeyUp(Left)) SetIdle();
               if (Input.GetKeyUp(Right)) SetIdle();
 
-              //if (Input.GetKey(Up)) Move();
-              //if (Input.GetKey(Down)) Back();
-              //if (Input.GetKey(Left)) TurnLeft();
-              //if (Input.GetKey(Right)) TurnRight();
+              if (Input.GetKey(Up)) MoveForward();
+              if (Input.GetKey(Down)) MoveBack();
+              if (Input.GetKey(Left)) TurnLeft();
+              if (Input.GetKey(Right)) TurnRight();
 
               if (Input.GetKeyUp(Atk)) Attack();
               if (Input.GetKey(Miss)) Sidestep();

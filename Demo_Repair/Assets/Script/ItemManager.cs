@@ -32,6 +32,7 @@ public class ItemManager : MonoBehaviour
        {
               GameObject obj = Instantiate(item);
               obj.transform.GetComponent<Item>().Settype(this);
+              obj.transform.GetComponent<Item>().Consume = Random.Range(3, 10);
               int x = Random.Range(-40, 40);
               int z = Random.Range(-40, 40);
               obj.transform.position = new Vector3(x, 2, z);
