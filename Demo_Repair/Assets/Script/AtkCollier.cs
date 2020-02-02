@@ -14,10 +14,13 @@ public class AtkCollier : MonoBehaviour
               switch (playerType)
               {
                      case PlayerType.Repairer:
-                            Debug.Log("Repairer");
-                    
+                            if (other.gameObject.tag == "Object") { 
+                                   Debug.Log("Repair : " + other.gameObject.name);
+                            other.gameObject.transform.GetComponent<Hat>().LoadPlus();
+                            }
                             break;
                      case PlayerType.Saboteur:
+                            if(other.gameObject.tag=="Player")
                             other.transform.GetComponent<Player>().SetDaze();
            
                             break;
